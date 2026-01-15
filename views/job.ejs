@@ -1,7 +1,42 @@
+<h1>
+Nos offres d'emploi
+</h1>
+<label for="search">
+saisir un métier ou un mot clé</label>
+<input type="text" id="search" name="search" placeholder="saisir un métier ou un mot clé"/>
+<div>ville
+<label for="ville1">
+<input id="ville1" type="checkbox" name="ville" value="1"/>
+orly
+</label>
+</div>
+<div>secteur
+<label for="ville1">
+<input id="ville1" type="checkbox" name="ville" value="1"/>
+gestion de projet et produit
+</label>
+
+</div>
+<div>contrat 
+<label for="ville1">
+<input id="ville1" type="checkbox" name="ville" value="1"/>
+cdi
+</label>
+
+</div>
+<div>entreprise
+<label for="ville1">
+<input id="ville1" type="checkbox" name="ville" value="1"/>
+air caraibe
+</label>
+
+</div>
+
 <h1>Enchanté anonyme !</h1>
 <p><%= solution %></p>
 
-Dans votre CV, nous avons détecté :
+<div>
+<p>Dans votre CV, nous avons détecté :</p>
 Afficher uniquement les offres personnalisées
 1
 Lieux de travail
@@ -12,16 +47,25 @@ Distance max. : Illimitée
 0103050100150Illimitée
 Illimitée
 Saisir une ville
-5
-Métiers
+<h2><span class="nombremetier">5</span>
+Métiers</h2>
 
 Vous pouvez réorganiser vos métiers en glissant ceux-ci dans l'ordre de votre choix.
 Ajouter un métier
-12
-Compétences
+<h2><span class="nombrecompetence">12</span>
+Compétences</h2>
 Ajouter une compétence
 
 Retrouvez nos suggestions qui correspondent à votre CV.
+Une offre d'emploi correspond à l'analyse de votre CV.
+Entity logo
+Chef de projet IT OPS
+20 octobre 2025
+
+Poste rattaché au Responsable du département SI Opérations Aériennes, sous la Direction des Systèmes d’information (DSI). Dans le cadre des objectifs fixés par le Responsable de service, le Chef de projet IT a une mission d’interface entre les équipes métiers et la maîtrise d’œuvre chargée de la réalisation technique du projet. Au quotidien, le Chef de projet IT est force de proposition sur les solutions SI et en assure le pilotage transversal. En amont du projet, il aide à définir les besoins, s’assure de l’intégration des outils à l’existant, consigne les spécifications fonctionnelles et rédige le cahier des charges. Tout au long de la conduite du projet, il veille au respect des coûts, des délais et de la qualité. Dans un contexte de modernisation, la DSI recherche un chef de projet IT afin de : ● Conduire des projets de transformation digitale des opérations aériennes (EFB, préparation des vols, e-logbook, planification des équipages et des vols, etc.) ● Répondre aux exigences IT des airbus A350 ● Accompagner le développement de nouveaux services de connectivité à bord ● Structurer et améliorer la performance du SI Opérations Aériennes ● Participer au recensement, à l’analyse et à la consolidation des demandes applicatives ou corrective du système d’information métier ● Recueillir et analyser les besoins des équipes métiers pour de nouveaux projets (SI ou d’organisation) ou des refontes importantes ● Analyser la faisabilité technique des demandes métiers, et veiller à la cohérence des demandes ● Préparer les éléments de chiffrage du coût des projets ● Rédiger les cahiers des charges formalisant les besoins des métiers ● Animer des réunions avec les équipes métiers de manière à affiner la demande. ● Analyser les impacts organisationnels ● Réaliser la cartographie des processus ● Assurer l’interface avec la MOE (interne ou prestataires) : suivre l’avancement du projet et répondre aux problèmes rencontrés ● Assurer le planning du projet ● Piloter la recette fonctionnelle (tests utilisateurs) ● Coordonner le déploiement du projet (suivi de la mise en ligne et remontée des incidents ou dysfonctionnements) ● Assurer le suivi des corrections des incidents selon leur nature ● Assurer une veille technologique
+Orly
+CDI
+Air Caraïbes
 
 Candidature spontanée
 
@@ -31,11 +75,16 @@ Les informations ci-dessous vont être envoyées avec votre candidature.
 Vous pouvez les corriger si nécessaire.
 Prénom *
 Nom de famille *
-Adresse électronique *
-Numéro de téléphone *
-Entité
-Entité
-Lettre de motivation
-Lettre de motivation
 
-Votre CV :cv.chefprojetit.annehnyme.pdf
+
+<label for="email">Adresse électronique *</label>
+<input type="text" id="email" name="email"/>
+<label for="phone">Numéro de téléphone *</label>
+<input type="text" id="phone" name="phone"/>
+Entité
+Entité
+
+<label for="lettre">Lettre de motivation</label>
+<textarea id="lettre" name="lettre"></textarea>
+
+<input type="file" id="cv" name="cv"/>
