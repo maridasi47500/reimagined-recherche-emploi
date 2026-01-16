@@ -1,6 +1,7 @@
 # reimagined-recherche-emploi
 # README
 
+- login sign up with passport
 ![alt text](offredemploi1.png)
 - chercher un travail
 - cv skills, lieux de travail, nom de métiers
