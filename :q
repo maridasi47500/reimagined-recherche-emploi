@@ -1,0 +1,26 @@
+<html>
+<head>
+<style>
+header {
+	width: 100%;
+	text-align: center;
+}
+.jobdescription{
+overflow: hidden;
+text-overflow: ellipsis;
+-webkit-line-clamp: 3;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+}
+main {
+width:100%;
+float:left;
+}
+.mycolumn {
+width:40%;
+float:left;
+padding-left:50px;
+}
+</style>
+</head>
+<body>

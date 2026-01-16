@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
     if (err) throw err
   
     console.log('The solution is: ', rows[0].solution)
-  res.render('job.ejs', {solution: ('The solution is: ', rows[0].solution)});
+  res.render('job.ejs', {distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
   })
   
 //  connection.end()

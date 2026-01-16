@@ -1,4 +1,12 @@
 # reimagined-recherche-emploi
+# README
+
+![alt text](offredemploi1.png)
+- chercher un travail
+- cv skills, lieux de travail, nom de métiers
+
+# friendly-job
+
 ````
 mysql> create user 'myuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'passw   ';
 Query OK, 0 rows affected (0,09 sec)
