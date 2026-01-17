@@ -1,7 +1,10 @@
 const express = require('express')
 const app = express()
+var session = require('express-session')
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
 const port = 3000
 var ejs = require('ejs');
+
 app.set('view engine', 'ejs');
 const mysql = require('mysql')
 const connection = mysql.createConnection({
@@ -26,7 +29,45 @@ connection.query('USE userdb;', function (error, results, fields) {
 
 app.get('/', (req, res) => {
 
-  //connection.connect()
+  
+  connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+    if (err) throw err
+  
+    console.log('The solution is: ', rows[0].solution)
+  res.render('welcome.ejs', {distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+  })
+  
+
+
+})
+app.get('/search', (req, res) => {
+
+  
+  connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+    if (err) throw err
+  
+    console.log('The solution is: ', rows[0].solution)
+  res.render('search.ejs', {distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+  })
+  
+
+
+})
+app.post('/search', (req, res) => {
+
+  
+  connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+    if (err) throw err
+  
+    console.log('The solution is: ', rows[0].solution)
+  res.render('search.ejs', {distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+  })
+  
+
+
+})
+app.get('/mycv', (req, res) => {
+
   
   connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
     if (err) throw err
@@ -35,13 +76,8 @@ app.get('/', (req, res) => {
   res.render('job.ejs', {distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
   })
   
-//  connection.end()
 
 
-  //res.render('job.ejs', {}, function(err, data) {
-  ////console.log(err || data)
-  //console.log(err)
-  //})
 })
 
 app.listen(port, () => {

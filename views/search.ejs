@@ -1,0 +1,30 @@
+<%- include('./base/header.ejs') %> 
+<main>
+
+
+<% if (jobs.length > 0) {%>
+<% if (jobname.length > 0) {%>
+
+<p>Une offre d'emploi correspond à votre recherche</p>
+<% } else { %>
+<p><%=jobs.length%> offres d'emploi à pourvoir</p>
+<% } %>
+<% for(var i=0; i<jobs.length; i++) {%>
+<% } %>
+<% } else { %>
+<p>Aucune offre disponible pour le moment.</p>
+<% } %>
+
+
+
+
+
+<div>
+<h2>Candidature spontanée</h2>
+
+<p>Aucune offre ne vous correspond ? N’hésitez pas à déposer une candidature spontanée.</p>
+
+<a href="/cv">Charger mon cv</a>
+</div>
+
+</main>
