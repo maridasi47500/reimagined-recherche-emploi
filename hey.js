@@ -30,11 +30,10 @@ connection.query('USE userdb;', function (error, results, fields) {
 app.get('/', (req, res) => {
 
   
-  connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+  connection.query('select * from job order by rand() limit 4', (err, rows, fields) => {
     if (err) throw err
   
-    console.log('The solution is: ', rows[0].solution)
-  res.render('welcome.ejs', {distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+  res.render('welcome.ejs', {q:'', jobs:rows, distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', 'jaja')});
   })
   
 
@@ -42,12 +41,19 @@ app.get('/', (req, res) => {
 })
 app.get('/search', (req, res) => {
 
+var {
+  id,
+  q = "it technician", 
+  since = new Date().toString(),
+  fields = ['x'],
+  anotherField = 'default'
+} = req.query;
+
   
-  connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+  connection.query('SELECT * from job where description like \'%'+ q.replaceAll(" ","%") + '%\'', (err, rows, fields) => {
     if (err) throw err
   
-    console.log('The solution is: ', rows[0].solution)
-  res.render('search.ejs', {distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+  res.render('search.ejs', {q: q, jobs: rows,distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', 'hfh')});
   })
   
 
@@ -66,14 +72,14 @@ app.post('/search', (req, res) => {
 
 
 })
-app.get('/mycv', (req, res) => {
+app.get('/cv', (req, res) => {
 
   
   connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
     if (err) throw err
   
     console.log('The solution is: ', rows[0].solution)
-  res.render('job.ejs', {distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+  res.render('job.ejs', {q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
   })
   
 

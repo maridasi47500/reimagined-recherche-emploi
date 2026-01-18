@@ -33,9 +33,15 @@ padding-left:50px;
 <h1>
 Nos offres d'emploi
 </h1>
+<form action="/search" method="get">
+<div>
 <label for="search">
 saisir un métier ou un mot clé</label>
-<input type="text" id="search" name="search" placeholder="saisir un métier ou un mot clé"/>
+<input type="text" value="<%=q%>" id="search" name="q" placeholder="saisir un métier ou un mot clé"/>
+</div>
+<div>
+<input type="submit" value="chercher" id="chercher" name="chercher" />
+</div>
 <div>ville
 <label for="ville1">
 <input id="ville1" type="checkbox" name="ville" value="1"/>
@@ -63,6 +69,7 @@ air caraibe
 </label>
 
 </div>
+</form>
 </header>
 
 
