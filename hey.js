@@ -1,4 +1,6 @@
 const express = require('express')
+const multer = require('multer');
+const upload = multer();
 const app = express()
 var session = require('express-session')
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
@@ -73,28 +75,47 @@ app.post('/search', (req, res) => {
 
 })
 app.get('/cv', (req, res) => {
+var info=req.session.info || {nom:"",
+email:"",
+nom:"",
+prenom:"anonyme",
+phone:"",
+lettre:""};
 
   
   connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
     if (err) throw err
   
     console.log('The solution is: ', rows[0].solution)
-  res.render('job.ejs', {q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+  res.render('job.ejs', {info: info, q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
   })
   
 
 
 })
-app.post('/cv', (req, res) => {
+app.post('/cv', upload.any(), (req, res) => {
+
+var formData = req.body;
+console.log('form data', formData);
 var {
   id,
   q = "it technician", 
   since = new Date().toString(),
   nom = "",
+  email = "",
+  lettre = "",
+  prenom = "anonyme",
+  phone = "",
   myskills = "",
   anotherField = 'default'
-} = req.query;
-req.session.nom=nom;
+} = req.body;
+var info={nom:nom,
+prenom:prenom,
+email:email,
+phone:phone,
+lettre:lettre};
+console.log(info);
+req.session.info=info;
 req.session.skills=myskills.split("+=+=+=");
 
   
@@ -102,7 +123,7 @@ req.session.skills=myskills.split("+=+=+=");
     if (err) throw err
   
     console.log('The solution is: ', rows[0].solution)
-  res.render('job.ejs', {q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+  res.render('job.ejs', {info: info, q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
   })
   
 

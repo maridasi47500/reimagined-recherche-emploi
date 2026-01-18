@@ -3,6 +3,7 @@
 
 - login sign up with passport
 ![alt text](offredemploi1.png)
+![alt text](offredemploi2.png)
 - chercher un travail
 - cv skills, lieux de travail, nom de métiers
 
