@@ -3,8 +3,23 @@
 
 <% if (jobs.length > 0) {%>
 <h2>Nos dernières offres</h2>
+<div class="row row-cols-1 row-cols-md-2 g-4">
+
 <% for(var i=0; i<jobs.length; i++) {%>
+  <div class="col">
+    <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+         <%job=jobs[0]%>
+        <h5 class="card-title"><%=job.title%></h5>
+        <p class="jobdescription"><%=job.description%></p>
+        <p class="card-text"><%=job.company_id%></p>
+        <p class="card-text"><%=job.contrat_id%></p>
+      </div>
+    </div>
+  </div>
 <% } %>
+  </div>
 <% } %>
 <a href="/search">voir toutes les offres</a>
 

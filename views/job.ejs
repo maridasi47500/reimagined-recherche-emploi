@@ -97,6 +97,12 @@ Compétences</h2>
 </div>
 </main>
 <script>
+function sendMyInfo(){
+}
+nom.addEventListener("change", sendMyInfo, true);
+email.addEventListener("change", sendMyInfo, true);
+//nom.removeEventListener("change", sendMyInfo, true);
+
 ajouterville.onclick=function(){
 nomdemesvilles.innerHTML+="<span class=\"mynewcity\"><span class=\"newcity\">"+addcity.value+"</span><span class=\"delete\" onclick=\"this.parentElement.remove();\">[X]</span></span>";
 var x = document.getElementsByClassName("nombrelieutravail")[0];

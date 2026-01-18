@@ -50,7 +50,7 @@ var {
 } = req.query;
 
   
-  connection.query('SELECT * from job where description like \'%'+ q.replaceAll(" ","%") + '%\'', (err, rows, fields) => {
+  connection.query('SELECT * from job where lower(description) like \'%'+ q.replaceAll(" ","%").toLowerCase() + '%\'', (err, rows, fields) => {
     if (err) throw err
   
   res.render('search.ejs', {q: q, jobs: rows,distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', 'hfh')});
@@ -73,6 +73,29 @@ app.post('/search', (req, res) => {
 
 })
 app.get('/cv', (req, res) => {
+
+  
+  connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+    if (err) throw err
+  
+    console.log('The solution is: ', rows[0].solution)
+  res.render('job.ejs', {q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+  })
+  
+
+
+})
+app.post('/cv', (req, res) => {
+var {
+  id,
+  q = "it technician", 
+  since = new Date().toString(),
+  nom = "",
+  myskills = "",
+  anotherField = 'default'
+} = req.query;
+req.session.nom=nom;
+req.session.skills=myskills.split("+=+=+=");
 
   
   connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
