@@ -85,12 +85,30 @@ entite:"",
 prenomwelcome:"anonyme",
 phone:"",
 lettre:""};
+var moncv=(info.skills.join(' ').split(" ")).concat(info.jobs.join(' ').split(" ")).filter(function(e){return e});
+var paspremier=false;
+var mysql="select * from job";
+for (var y=0;y<moncv.length;y++){
+if (!paspremier){
+mysql+=" where description like '%"+moncv[y]+"%'";
+}else{
+mysql+=" or description like '%"+moncv[y]+"%'";
+}
+paspremier=true;
+}
+console.log(moncv);
+if (moncv.length === 0){
+mysql+=" limit 0";
+}
 
   
   connection.query('SELECT * from entreprise', (err, rows, fields) => {
     if (err) throw err
+  connection.query(mysql, (errjob, rowsjob, fieldsjob) => {
+    if (err) throw err
   
-  res.render('job.ejs', {info: info, entites: rows, q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', 'lkjh')});
+  res.render('job.ejs', {info: info,jobs:rowsjob, entites: rows, q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', 'lkjh')});
+  })
   })
   
 
@@ -132,13 +150,14 @@ console.log(info);
 req.session.info=info;
 req.session.skills=myskills.split("+=+=+=");
 
+
+
   
-  connection.query('select 1 + 2 as solution', (err, rows, fields) => {
+  connection.query("select 1 + 1 as solution", (err, rows, fields) => {
     if (err) throw err
   
-    console.log('The solution is: ', rows[0].solution)
     res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify({info: info, solution: ('The solution is: ', rows[0].solution)}));
+  res.end(JSON.stringify({info: info, solution: ('The solution is: ', "dfg")}));
   })
   
 
