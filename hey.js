@@ -44,8 +44,7 @@ app.get('/', (req, res) => {
 app.get('/search', (req, res) => {
 
 var {
-  id,
-  q = "it technician", 
+  q = "", 
   since = new Date().toString(),
   fields = ['x'],
   anotherField = 'default'
@@ -78,16 +77,20 @@ app.get('/cv', (req, res) => {
 var info=req.session.info || {nom:"",
 email:"",
 nom:"",
-prenom:"anonyme",
+jobs:[],
+skills:[],
+cities:[],
+prenom:"",
+entite:"",
+prenomwelcome:"anonyme",
 phone:"",
 lettre:""};
 
   
-  connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+  connection.query('SELECT * from entreprise', (err, rows, fields) => {
     if (err) throw err
   
-    console.log('The solution is: ', rows[0].solution)
-  res.render('job.ejs', {info: info, q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+  res.render('job.ejs', {info: info, entites: rows, q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', 'lkjh')});
   })
   
 
@@ -96,22 +99,33 @@ lettre:""};
 app.post('/cv', upload.any(), (req, res) => {
 
 var formData = req.body;
+var formUpload = req.files;
 console.log('form data', formData);
+console.log('form data', formUpload);
 var {
-  id,
-  q = "it technician", 
-  since = new Date().toString(),
   nom = "",
   email = "",
+  cv = {},
   lettre = "",
-  prenom = "anonyme",
+  prenom = "",
+  entite="",
+  prenomwelcome = "anonyme",
   phone = "",
+  skills=[],
+  jobs=[],
+  cities=[],
   myskills = "",
   anotherField = 'default'
-} = req.body;
+} = formData;
 var info={nom:nom,
 prenom:prenom,
+entite:entite,
+prenomwelcome:prenom,
 email:email,
+  skills:((typeof skills === 'string' || skills instanceof String) ? [skills] : skills),
+  jobs:((typeof jobs === 'string' || jobs instanceof String) ? [jobs] : jobs),
+  cities:((typeof cities === 'string' || cities instanceof String) ? [cities] : cities),
+cv:formUpload[0],
 phone:phone,
 lettre:lettre};
 console.log(info);
@@ -119,11 +133,12 @@ req.session.info=info;
 req.session.skills=myskills.split("+=+=+=");
 
   
-  connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+  connection.query('select 1 + 2 as solution', (err, rows, fields) => {
     if (err) throw err
   
     console.log('The solution is: ', rows[0].solution)
-  res.render('job.ejs', {info: info, q:'', distances: [0, 10, 30, 50, 100, 150], solution: ('The solution is: ', rows[0].solution)});
+    res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({info: info, solution: ('The solution is: ', rows[0].solution)}));
   })
   
 

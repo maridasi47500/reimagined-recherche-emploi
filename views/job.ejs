@@ -2,16 +2,21 @@
 <main>
 
 <div class="mycolumn">
-<h1>Enchantée <%=info.prenom%> !</h1>
+<h1>Enchantée <span id="welcomeprenom"><%=info.prenomwelcome%></span> !</h1>
 <p><%= solution %></p>
 
 <div>
 <p>Dans votre CV, nous avons détecté :</p>
 Afficher uniquement les offres personnalisées
-<h2><span class="nombrelieutravail">1</span>
+<h2><span class="nombrelieutravail"><%=info.cities.length%></span>
 Lieux de travail</h2>
 
-<p>Prioriser les offres autour de : <span id="nomdemesvilles"></span></p>
+<p>Prioriser les offres autour de : <span id="nomdemesvilles">
+<% for(var i=0; i<info.cities.length; i++) {%>
+<span class="mynewcity"><span class="newcity"><%=info.cities[i]%></span><span class="delete" onclick="this.parentElement.remove();">[X]</span></span>
+<% } %>
+
+</span></p>
 
 <div class="field">
 <label for="distancemax">Distance max. :</label>
@@ -24,18 +29,28 @@ Lieux de travail</h2>
 
 <input name="addcity" placeholder="Saisir une ville" id="addcity"/>
 <button type="button" id="ajouterville">ajouter une ville </button>
-<h2><span class="nombremetier">5</span>
+<h2><span class="nombremetier"><%=info.jobs.length%></span>
 Métiers</h2>
-<div id="nomdemesmetiers"></div>
+<div id="nomdemesmetiers">
+<% for(var i=0; i<info.jobs.length; i++) {%>
+<span class="mynewjob"><span class="newjob"><%=info.jobs[i]%></span><span class="delete" onclick="this.parentElement.remove();">[X]</span></span>
+<% } %>
+
+</div>
 
 <p>Vous pouvez réorganiser vos métiers en glissant ceux-ci dans l'ordre de votre choix.</p>
 <input name="addjob" id="addjob" type="text" placeholder="Ajouter un métier"/>
 <button type="button" id="ajoutermetier">ajouter un metier </button>
-<h2><span class="nombrecompetence">12</span>
+<h2><span class="nombrecompetence"><%=info.skills.length%></span>
 Compétences</h2>
 <input name="addskill" id="addskill" type="text" placeholder="Ajouter une compétence"/>
 <button type="button" id="ajoutercompetence">ajouter une compétence </button>
-<div id="nomdemescompetences"></div>
+<div id="nomdemescompetences">
+<% for(var i=0; i<info.skills.length; i++) {%>
+<span class="mynewskill"><span class="newskill"><%=info.skills[i]%></span><span class="delete" onclick="this.parentElement.remove();">[X]</span></span>
+<% } %>
+
+</div>
 
 <p>Retrouvez nos suggestions qui correspondent à votre CV.</p>
 </div>
@@ -60,10 +75,10 @@ Compétences</h2>
 <p>Les informations ci-dessous vont être envoyées avec votre candidature.</p>
 <p>Vous pouvez les corriger si nécessaire.</p>
 
-<form action="/cv" id="form-send-info">
+<form action="/cv" method="post" id="form-send-info">
 <div class="field">
 <label for="prenom">Prenom *</label>
-<input type="text" value="<%=info.prenom%>" id="prenom" name="prenom"/>
+<input type="text" onkeyup="welcomeprenom.innerHTML=this.value;return false;" onchange="welcomeprenom.innerHTML=this.value;return false;" value="<%=info.prenom%>" id="prenom" name="prenom"/>
 </div>
 <div class="field">
 <label for="nom">Nom de famille *</label>
@@ -81,8 +96,9 @@ Compétences</h2>
 <div class="field">
 <label for="entite">Entité</label>
 <select id="entite" name="entite">
-<option value="aircaraibe">air caraibe</option>
-<option value="air france">air france</option>
+<% for(var i=0; i<entites.length; i++) {%>
+<option <%if (info.entite === entites[i]){%>selected<%}%> value="<%=entites[i].id%>"><%=entites[i].name%></option>
+<%}%>
 </select>
 </div>
 
@@ -95,6 +111,9 @@ Compétences</h2>
 <label for="cv">CV</label>
 <input type="file" id="cv" name="cv"/>
 </div>
+<div class="actions">
+<button type="button" id="sendbutton">envoyer votre candidature</button>
+</div>
 </form>
 </div>
 </main>
@@ -102,11 +121,27 @@ Compétences</h2>
 function sendMyInfo(){
 var myform=document.getElementById("form-send-info");
 
-
 var myformdata=new FormData(myform);
+
+var paspremier,listskills=[], skills=document.getElementsByClassName("newskill");
+for (var i=0;i<skills.length;i++){
+listskills.push(skills[i].innerHTML);
+myformdata.append("skills",skills[i].innerHTML);
+}
+var listjobs=[],jobs=document.getElementsByClassName("newjob");
+for (i=0;i<jobs.length;i++){
+listjobs.push(jobs[i].innerHTML);
+myformdata.append("jobs",jobs[i].innerHTML);
+}
+var listcities=[],cities=document.getElementsByClassName("newcity");
+for (i=0;i<cities.length;i++){
+listcities.push(cities[i].innerHTML);
+myformdata.append("cities",cities[i].innerHTML);
+}
+
   $.ajax({
     // Your server script to process the upload
-    url: $(this).attr("action"),
+    url: myform.action,
     type: 'POST',
 
     // Form data
@@ -146,6 +181,10 @@ var myformdata=new FormData(myform);
 nom.addEventListener("change", sendMyInfo, true);
 prenom.addEventListener("change", sendMyInfo, true);
 email.addEventListener("change", sendMyInfo, true);
+phone.addEventListener("change", sendMyInfo, true);
+lettre.addEventListener("change", sendMyInfo, true);
+entite.addEventListener("change", sendMyInfo, true);
+sendbutton.addEventListener("click", sendMyInfo, true);
 //nom.removeEventListener("change", sendMyInfo, true);
 
 ajouterville.onclick=function(){
