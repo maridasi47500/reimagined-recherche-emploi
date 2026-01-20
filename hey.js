@@ -23,6 +23,7 @@ connection.query('USE userdb;', function (error, results, fields) {
   connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
     if (err) throw err
     console.log('The solution is: ', rows[0].solution)
+    session.solution=rows[0].solution;
   })
   
 //  connection.end()
@@ -30,8 +31,6 @@ connection.query('USE userdb;', function (error, results, fields) {
 
 
 app.get('/', (req, res) => {
-
-  
   connection.query('select * from job order by rand() limit 4', (err, rows, fields) => {
     if (err) throw err
   
@@ -159,8 +158,33 @@ req.session.skills=myskills.split("+=+=+=");
     res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify({info: info, solution: ('The solution is: ', "dfg")}));
   })
-  
 
+})
+app.post('/getcities', upload.any(), (req, res) => {
+  connection.query("select * from cities", (err, rows, fields) => {
+    if (err) throw err
+  
+    res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({cities: rows, solution: ('The solution is: ', "dfg")}));
+  })
+
+})
+app.post('/getcompanies', upload.any(), (req, res) => {
+  connection.query("select * from companies", (err, rows, fields) => {
+    if (err) throw err
+  
+    res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({companies: rows, solution: ('The solution is: ', "dfg")}));
+  })
+
+})
+app.post('/getcontracts', upload.any(), (req, res) => {
+  connection.query("select * from contracts", (err, rows, fields) => {
+    if (err) throw err
+  
+    res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({contracts: rows, solution: ('The solution is: ', "dfg")}));
+  })
 
 })
 
